@@ -18,10 +18,8 @@ def parent_task(count):
 
     NOTE: This must be a *top-level function* (not nested inside another)
     because the multiprocessing start method is 'spawn' on macOS and Windows
-    operating systems.
-    With 'spawn', Python needs to pickle the function to send it to the child
-    process. Local (nested) functions cannot be pickled. On Linux, the default
-    start method is 'fork', so this issue does not occur there.
+    operating systems. Python needs to pickle the function to send it to the child
+    process, and local (nested) functions cannot be pickled.
     """
     workers = []
     for _ in range(count):
@@ -69,7 +67,7 @@ def benchmark(label, creator, numworkers, use_parent=False):
 def main():
     numworkers = 1000     # Number of work units to create
 
-    print("Benchmarking creation and joining of processes vs threads:\n")
+    print("Benchmarking creation of processes vs threads:\n")
 
     # Benchmark processes
     benchmark("Processes", Process, numworkers)
